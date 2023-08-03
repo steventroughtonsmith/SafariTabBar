@@ -1,8 +1,8 @@
 # SafariTabBar
 
-This is a simplistic recreation of the MobileSafari tab bar on iPad (prior to iPadOS 15). It is also very unfinished, and **not** intended in any way to be a usable control or library in your apps. I'm providing this as illustrative sample code just because it's kinda neat.
+This is a simplistic recreation of the classic MobileSafari tab bar on iPad and visionOS. It is very unfinished, and **not** intended in any way to be a usable control or library in your apps. I'm providing this as illustrative sample code just because it's kinda neat.
 
-This code also demonstrates how you could drag a tab out into a new window on iPad, using NSUserActivity.
+This code also demonstrates how you might drag a tab out into a new window on iPad, using NSUserActivity.
 
 ### Issues
 
@@ -14,4 +14,4 @@ This code also demonstrates how you could drag a tab out into a new window on iP
 ### Screenshots
 
 ![https://hccdata.s3.us-east-1.amazonaws.com/gh_safaritabbar.jpg](https://hccdata.s3.us-east-1.amazonaws.com/gh_safaritabbar.jpg)
-![https://hccdata.s3.us-east-1.amazonaws.com/gh_safaritabbar_2.jpg](https://hccdata.s3.us-east-1.amazonaws.com/gh_safaritabbar_2.jpg)
+![https://hccdata.s3.us-east-1.amazonaws.com/gh_safaritabbar_2.jpg](https://hccdata.s3.us-east-1.amazonaws.com/gh_safaritabbar_3.jpg)
