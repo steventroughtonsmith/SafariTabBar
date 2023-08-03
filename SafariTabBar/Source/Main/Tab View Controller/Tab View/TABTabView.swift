@@ -9,7 +9,7 @@ import UIKit
 
 class TABTabView: UIControl, UIDragInteractionDelegate {
 	let dividerView = PSTLHairlineDividerView()
-
+	
 	var tabController:TABTabbedViewController?
 	
 	var tabButtons:[UIButton] = []
@@ -56,10 +56,13 @@ class TABTabView: UIControl, UIDragInteractionDelegate {
 				i += 1
 			})
 			
-			let newButton = TABTabNewButton()
-			newButton.addTarget(self, action: #selector(newTab(_:)), for: .touchUpInside)
-			tabButtons.append(newButton)
-			addSubview(newButton)
+			if UIDevice.current.userInterfaceIdiom != .reality {
+				
+				let newButton = TABTabNewButton()
+				newButton.addTarget(self, action: #selector(newTab(_:)), for: .touchUpInside)
+				tabButtons.append(newButton)
+				addSubview(newButton)
+			}
 			
 			layoutSubviews()
 		}
@@ -100,7 +103,7 @@ class TABTabView: UIControl, UIDragInteractionDelegate {
 	
 	override func layoutSubviews() {
 		let minTabWidth = UIFloat(150)
-		let newButtonWidth = UIFloat(40)
+		let newButtonWidth = UIDevice.current.userInterfaceIdiom == .reality ? .zero : UIFloat(40)
 		var tabWidth = (bounds.width-newButtonWidth) / CGFloat(viewControllers?.count ?? 1)
 		
 		if tabWidth < minTabWidth {
@@ -113,20 +116,26 @@ class TABTabView: UIControl, UIDragInteractionDelegate {
 		tabButtons.forEach({
 			
 			if $0.tag != 0xff {
-				$0.frame = CGRect(x: currentX, y: safeAreaInsets.top, width: tabWidth, height: bounds.height-safeAreaInsets.top)
-
+				var buttonArea = CGRect(x: currentX, y: safeAreaInsets.top, width: tabWidth, height: bounds.height-safeAreaInsets.top)
+				
+				if UIDevice.current.userInterfaceIdiom == .reality {
+					buttonArea = buttonArea.insetBy(dx: UIFloat(13), dy: UIFloat(13))
+				}
+				
+				$0.frame = buttonArea
+				
 				if selectedIndex == i {
-					$0.backgroundColor = .clear
+					($0 as? TABTabButton)?.tabState = .selected
 					$0.alpha = 1
 				}
 				else {
-					$0.backgroundColor = .systemFill
+					($0 as? TABTabButton)?.tabState = .normal
 					$0.alpha = 0.7
 				}
 			}
 			else {
 				$0.frame = CGRect(x: currentX, y: safeAreaInsets.top, width: newButtonWidth, height: bounds.height-safeAreaInsets.top)
-
+				
 			}
 			
 			currentX += tabWidth
@@ -157,5 +166,5 @@ class TABTabView: UIControl, UIDragInteractionDelegate {
 		if operation == .cancel {
 			viewControllers = tabController?.viewControllers
 		}
-	}	
+	}
 }

@@ -26,12 +26,19 @@ class TABVibrantTextField: UIView, UITextFieldDelegate {
 		layer.masksToBounds = true
 		
 		fakeTextField.borderStyle = .none
-		backgroundView.backgroundColor = .systemBackground.withAlphaComponent(0.15)
+		backgroundView.backgroundColor = UIDevice.current.userInterfaceIdiom == .reality ? .systemGroupedBackground : .systemBackground.withAlphaComponent(0.15)
 		backgroundView.layer.cornerCurve = .continuous
 		backgroundView.layer.cornerRadius = UIFloat(10)
 		backgroundView.isUserInteractionEnabled = false
+		
+		if UIDevice.current.userInterfaceIdiom == .reality {
+			backgroundView.layer.borderWidth = 1.0/traitCollection.displayScale
+			backgroundView.layer.borderColor = UIColor.systemFill.cgColor
+			
+			textField.textAlignment = .center
+		}
 
-		textField.text = "https://www.apple.com"
+		textField.text = "www.apple.com"
 		textField.borderStyle = .none
 		textField.backgroundColor = .clear
 		textField.delegate = self
@@ -55,6 +62,11 @@ class TABVibrantTextField: UIView, UITextFieldDelegate {
 		
 		textField.frame = insetFrame
 		fakeTextField.frame = insetFrame
+		
+		if UIDevice.current.userInterfaceIdiom == .reality {
+			backgroundView.layer.cornerRadius = backgroundView.bounds.height/2
+
+		}
 	}
 	
 	override func sizeThatFits(_ size: CGSize) -> CGSize {

@@ -21,6 +21,7 @@
 		B05ACA1426FC2E0F008D45B3 /* TABTabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05ACA1326FC2E0F008D45B3 /* TABTabButton.swift */; };
 		B05ACA1626FC2E25008D45B3 /* TABTabNewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05ACA1526FC2E25008D45B3 /* TABTabNewButton.swift */; };
 		B05ACA1A26FC3728008D45B3 /* TABVibrantTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05ACA1926FC3728008D45B3 /* TABVibrantTextField.swift */; };
+		B0D95B4D2A7C150600F33F73 /* TABOrnament.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D95B4C2A7C150600F33F73 /* TABOrnament.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		B05ACA1526FC2E25008D45B3 /* TABTabNewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TABTabNewButton.swift; sourceTree = "<group>"; };
 		B05ACA1826FC3243008D45B3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B05ACA1926FC3728008D45B3 /* TABVibrantTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TABVibrantTextField.swift; sourceTree = "<group>"; };
+		B0D95B4C2A7C150600F33F73 /* TABOrnament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TABOrnament.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				B05ACA0C26FBD3F6008D45B3 /* PSTLHairlineDividerView.swift */,
 				B05ACA1126FC0FDD008D45B3 /* PSTLVisualEffectView.swift */,
 				B05ACA0526FBCFC8008D45B3 /* TABTabbedViewController.swift */,
+				B0D95B4C2A7C150600F33F73 /* TABOrnament.swift */,
 				B05ACA1926FC3728008D45B3 /* TABVibrantTextField.swift */,
 			);
 			path = "Tab View Controller";
@@ -212,6 +215,7 @@
 				B05AC9FB26FBCF9C008D45B3 /* TABMainViewController.swift in Sources */,
 				B05ACA0B26FBD20B008D45B3 /* TABTabView.swift in Sources */,
 				B05ACA1626FC2E25008D45B3 /* TABTabNewButton.swift in Sources */,
+				B0D95B4D2A7C150600F33F73 /* TABOrnament.swift in Sources */,
 				B05ACA0926FBD0FE008D45B3 /* Number+Scaling.swift in Sources */,
 				B05ACA1A26FC3728008D45B3 /* TABVibrantTextField.swift in Sources */,
 				B05ACA1226FC0FDD008D45B3 /* PSTLVisualEffectView.swift in Sources */,
@@ -366,8 +370,8 @@
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -377,11 +381,12 @@
 				PRODUCT_NAME = SafariTabBar;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
+				TARGETED_DEVICE_FAMILY = "1,2,6,7";
 			};
 			name = Debug;
 		};
@@ -403,8 +408,8 @@
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -414,11 +419,12 @@
 				PRODUCT_NAME = SafariTabBar;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
+				TARGETED_DEVICE_FAMILY = "1,2,6,7";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

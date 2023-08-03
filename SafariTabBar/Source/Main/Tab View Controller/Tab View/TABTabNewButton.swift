@@ -12,7 +12,9 @@ class TABTabNewButton: UIButton {
 	init() {
 		super.init(frame: .zero)
 		
-		backgroundColor = .secondarySystemFill
+		if UIDevice.current.userInterfaceIdiom != .reality {
+			backgroundColor = .secondarySystemFill
+		}
 		
 		setImage(UIImage(systemName: "plus"), for: .normal)
 		tintColor = .secondaryLabel

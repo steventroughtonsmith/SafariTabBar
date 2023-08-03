@@ -21,12 +21,12 @@ class TABSceneDelegate: UIResponder, UIWindowSceneDelegate {
 			let tvc = TABTabbedViewController()
 			tvc.viewControllerClassForNewTabs = TABMainViewController.self
 			
-			tvc.viewControllers = [TABMainViewController(), TABMainViewController(), TABMainViewController()]
+			tvc.viewControllers = [TABMainViewController(address: "https://www.apple.com"), TABMainViewController(address: "https://developer.apple.com/visionos/"), TABMainViewController(address: "https://www.apple.com/ios/")]
 			window.rootViewController = tvc
 			
 #if targetEnvironment(macCatalyst)
 			
-#warning("This sample is not intended for Mac Catalyst")
+//#warning("This sample is not intended for Mac Catalyst")
 			windowScene.titlebar?.titleVisibility = .hidden
 			
 #endif

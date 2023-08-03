@@ -6,13 +6,51 @@
 //
 
 import UIKit
+import SwiftUI
+
+class TABStackView: UIView {
+	var arrangedSubviews:[UIView] = []
+	var desiredHeight:CGFloat
+	
+	init(desiredHeight: CGFloat) {
+		self.desiredHeight = desiredHeight
+		super.init(frame: .zero)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	// MARK: -
+	
+	func addArrangedSubview(_ view:UIView) {
+		arrangedSubviews.append(view)
+		addSubview(view)
+	}
+	
+	override func layoutSubviews() {
+		let rowHeight = (arrangedSubviews.count == 1) ? bounds.height : (desiredHeight/CGFloat(arrangedSubviews.count))
+		
+		var y = CGFloat.zero
+		var i = 0
+		arrangedSubviews.forEach {
+			
+			$0.frame = CGRect(x: 0, y: y, width: bounds.width, height: rowHeight)
+			i += 1
+			y += rowHeight
+		}
+	}
+}
 
 class TABTabbedViewController: UIViewController {
+	
 	
 	let tabBar = TABTabView()
 	let toolbar = UIToolbar()
 	let effectView = PSTLVisualEffectView(blurStyle: .systemChromeMaterial)
-
+	
+	let toolbarWrapper = TABStackView(desiredHeight: UIFloat(140))
+	
 	var viewControllerClassForNewTabs:UIViewController.Type?
 	
 	var selectedIndex = 0 {
@@ -20,7 +58,7 @@ class TABTabbedViewController: UIViewController {
 			
 		}
 	}
-
+	
 	var viewControllers: [UIViewController]? {
 		willSet {
 			guard let viewControllers = viewControllers else { return }
@@ -34,7 +72,7 @@ class TABTabbedViewController: UIViewController {
 		}
 		didSet {
 			guard let viewControllers = viewControllers else { return }
-
+			
 			viewControllers.forEach({
 				addChild($0)
 				view.insertSubview($0.view, at: 0)
@@ -52,22 +90,62 @@ class TABTabbedViewController: UIViewController {
 	init() {
 		super.init(nibName: nil, bundle: nil)
 		
-		view.addSubview(effectView)
-		
-		toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-		toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
-		
 		let urlField = TABVibrantTextField(blurEffect: effectView.contentEffectView.effect!)
-
-		let urlFieldItem = UIBarButtonItem(customView: urlField)
 		
-		toolbar.items = [UIBarButtonItem(systemItem: .bookmarks, primaryAction: nil, menu: nil), .flexibleSpace(), urlFieldItem, .flexibleSpace(), UIBarButtonItem(systemItem: .search, primaryAction: nil, menu: nil)]
+		if UIDevice.current.userInterfaceIdiom == .reality {
+			
+			let container = UIStackView()
+			container.spacing = UIFloat(16)
+						
+			do {
+				let button = UIButton(type: .system)
+				button.configuration = .borderedProminent()
+				
+				button.setImage(UIImage(systemName: "book"), for: .normal)
+				
+				container.addArrangedSubview(button)
+			}
+			container.addArrangedSubview(urlField)
+			
+			do {
+				let button = UIButton(type: .system)
+				button.configuration = .borderedProminent()
+				
+				button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+				
+				container.addArrangedSubview(button)
+			}
+			
+			container.isLayoutMarginsRelativeArrangement = true
+			container.directionalLayoutMargins = .init(top: UIFloat(13), leading: UIFloat(13), bottom: UIFloat(13), trailing: UIFloat(13))
+			
+			toolbarWrapper.addArrangedSubview(container)
+			toolbarWrapper.addArrangedSubview(tabBar)
+			
+			setupOrnament()
+		}
+		else {
+			effectView.contentView.addSubview(toolbar)
+			effectView.contentView.addSubview(tabBar)
+			
+			toolbarWrapper.addArrangedSubview(effectView)
+			view.addSubview(toolbarWrapper)
+			toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+			toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+			
+			
+			let urlFieldItem = UIBarButtonItem(customView: urlField)
+			
+			toolbar.items = [UIBarButtonItem(systemItem: .bookmarks, primaryAction: nil, menu: nil), .flexibleSpace(), urlFieldItem, .flexibleSpace(), UIBarButtonItem(systemItem: .search, primaryAction: nil, menu: nil)]
+			
+		}
+		
 		
 		tabBar.tabController = self
 		tabBar.addTarget(self, action: #selector(tabSelected(_:)), for: .valueChanged)
 		
-		effectView.contentView.addSubview(toolbar)
-		effectView.contentView.addSubview(tabBar)
+		
+		
 	}
 	
 	required init?(coder: NSCoder) {
@@ -84,16 +162,23 @@ class TABTabbedViewController: UIViewController {
 	
 	override func viewDidLayoutSubviews() {
 		
-		let tabBarHeight = UIFloat(36)
+		let tabBarHeight = UIDevice.current.userInterfaceIdiom == .reality ? UIFloat(60) : UIFloat(36)
 		let toolbarHeight = UIFloat(44)
-
+		
 		super.viewDidLayoutSubviews()
 		
 		guard let viewControllers = viewControllers else { return }
 		
 		let viewBounds = view.bounds
 		
-		effectView.frame = CGRect(x: viewBounds.minX, y: viewBounds.minY, width: viewBounds.width, height: toolbarHeight+tabBarHeight+view.safeAreaInsets.top)
+		if UIDevice.current.userInterfaceIdiom == .reality {
+			toolbarWrapper.frame = CGRect(x: 0, y: 0, width: UIFloat(640), height:UIFloat(140))
+			
+		} else {
+			toolbarWrapper.frame = CGRect(x: viewBounds.minX, y: viewBounds.minY, width: viewBounds.width, height: toolbarHeight+tabBarHeight+view.safeAreaInsets.top)
+		}
+		
+		effectView.frame = toolbarWrapper.bounds
 		
 		let division = effectView.bounds.divided(atDistance: tabBarHeight, from: .maxYEdge)
 		
@@ -113,7 +198,6 @@ class TABTabbedViewController: UIViewController {
 			}
 			
 			$0.view.frame = view.bounds
-			//CGRect(x: safeFrame.minX, y: view.safeAreaInsets.top+safeFrame.minY+tabBarHeight, width: safeFrame.width, height: safeFrame.height-tabBarHeight-view.safeAreaInsets.top)
 			
 			i += 1
 		})
@@ -121,9 +205,9 @@ class TABTabbedViewController: UIViewController {
 	
 	func closeTabAtIndex(_ index:Int) {
 		guard var viewControllers = viewControllers else { return }
-
+		
 		viewControllers.remove(at: index)
-
+		
 		if selectedIndex > viewControllers.count-1 {
 			selectedIndex = viewControllers.count-1
 			tabBar.selectedIndex = selectedIndex
@@ -132,7 +216,7 @@ class TABTabbedViewController: UIViewController {
 		self.viewControllers = viewControllers
 	}
 	
-	func newTab(_ sender:UIButton) {
+	@objc func newTab(_ sender:UIButton) {
 		guard var viewControllers = viewControllers else { return }
 		guard let viewControllerClassForNewTabs = viewControllerClassForNewTabs else { return }
 		
@@ -141,5 +225,32 @@ class TABTabbedViewController: UIViewController {
 		tabBar.selectedIndex = selectedIndex
 		
 		self.viewControllers = viewControllers
+	}
+	
+#if os(xrOS)
+	override var preferredContainerBackgroundStyle: UIContainerBackgroundStyle {
+		return .glass
+	}
+#endif
+	class OrnamentViewModel : ObservableObject {
+		@Published var isExpanded: Bool = false
+		
+		
+	}
+	
+	func setupOrnament() {
+#if os(xrOS)
+		let ornament = UIHostingOrnament(sceneAlignment: .top, contentAlignment: .center) {
+			TABOrnament(contentView: toolbarWrapper)
+		}
+		
+		ornaments = [ornament]
+#endif
+	}
+
+	// MARK: -
+	
+	override var keyCommands: [UIKeyCommand]? {
+		return [UIKeyCommand(input: "n", modifierFlags: .command, action: #selector(newTab(_:)))]
 	}
 }

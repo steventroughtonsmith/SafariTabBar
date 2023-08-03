@@ -23,13 +23,17 @@ extension UIColor {
 final class TABMainViewController: UIViewController {
 	
 	let webView = WKWebView()
+	
+	convenience init() {
+		self.init(address: "https://www.apple.com")
+	}
 
-    init() {
+	init(address:String) {
         super.init(nibName: nil, bundle: nil)
         title = "Testificate"
-
+		
 		webView.scrollView.contentInsetAdjustmentBehavior = .always
-		webView.load(URLRequest(url: URL(string: "https://www.apple.com")!))
+		webView.load(URLRequest(url: URL(string: address)!))
 		
 		webView.scrollView.contentOffset = .zero
 		view.addSubview(webView)
@@ -44,4 +48,6 @@ final class TABMainViewController: UIViewController {
 		
 		webView.frame = view.bounds
 	}
+	
+	
 }
