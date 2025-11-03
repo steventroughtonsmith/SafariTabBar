@@ -2,7 +2,7 @@
 
 This is a simplistic recreation of the classic MobileSafari tab bar on iPad and visionOS. It is very unfinished, and **not** intended in any way to be a usable control or library in your apps. I'm providing this as illustrative sample code just because it's kinda neat.
 
-On visionOS, the rollover expansion effect is only possible with the mouse/trackpad cursor in this seed, not eye tracking.
+On visionOS, the rollover expansion effect uses a custom hoverEffect.
 
 This code also demonstrates how you might drag a tab out into a new window on iPad, using NSUserActivity.
 

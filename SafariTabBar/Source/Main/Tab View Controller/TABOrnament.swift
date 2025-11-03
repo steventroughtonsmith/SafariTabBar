@@ -26,17 +26,29 @@ struct TABOrnament: View {
 	var body: some View {
 		VStack {
 			UIViewWrapper(view: contentView)
-				.frame(width: UIFloat(640), height: isExpanded ? UIFloat(140) : UIFloat(70))
+				.frame(width: UIFloat(640), height: UIFloat(140))
 				.glassBackgroundEffect(in: RoundedRectangle(cornerRadius: UIFloat(35)))
-				.onHover { hovered in
-					withAnimation(.interactiveSpring(duration:0.3)) {
-						isExpanded = hovered
-					}
-				}
+				.hoverEffect(AddressBarRevealEffect())
+				
 			Spacer(minLength: UIFloat(50))
 			
 		}
 		.frame(width: UIFloat(640), height: UIFloat(140+50))
 	}
 }
+
+struct AddressBarRevealEffect: CustomHoverEffect {
+	func body(content: Content) -> some CustomHoverEffect {
+		content.hoverEffect { effect, isActive, proxy in
+			effect.animation(.spring.delay(isActive ? 0.2 : 0.8)) { _ in
+				effect.clipShape(RoundedRectangle(cornerRadius: UIFloat(35)).size(
+					width: proxy.size.width,
+					height: isActive ? UIFloat(140) : UIFloat(70),
+					anchor: .top
+				))
+			}
+		}
+	}
+}
+
 #endif

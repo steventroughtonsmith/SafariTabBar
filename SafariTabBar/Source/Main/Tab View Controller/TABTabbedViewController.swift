@@ -240,7 +240,7 @@ class TABTabbedViewController: UIViewController {
 	
 	func setupOrnament() {
 #if os(xrOS)
-		let ornament = UIHostingOrnament(sceneAlignment: .top, contentAlignment: .center) {
+		let ornament = UIHostingOrnament(sceneAnchor: .top, contentAlignment: .center) {
 			TABOrnament(contentView: toolbarWrapper)
 		}
 		

@@ -30,6 +30,8 @@ class TABTabButton: UIButton {
 						var img = UIImage(systemName: "xmark.circle.fill")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: UIFloat(32), weight: .light))
 						img = img?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(hierarchicalColor: .secondaryLabel))
 						
+						self?.backgroundColor = .systemBackground
+
 						self?.closeButton.setImage(img, for: .normal)
 						self?.closeButton.alpha = 0
 					}
@@ -45,6 +47,8 @@ class TABTabButton: UIButton {
 						var img = UIImage(systemName: "xmark.circle.fill")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: UIFloat(32), weight: .light))
 						img = img?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(hierarchicalColor: .black))
 						
+						self?.backgroundColor = .secondarySystemBackground
+
 						self?.closeButton.setImage(img, for: .normal)
 						
 						self?.closeButton.alpha = 1
@@ -72,6 +76,8 @@ class TABTabButton: UIButton {
 		let symcfg = UIImage.SymbolConfiguration(hierarchicalColor: .secondaryLabel)
 		closeButton.setImage(UIImage(systemName: "xmark.circle.fill", withConfiguration: symcfg), for: .normal)
 		closeButton.tintColor = .secondaryLabel
+		
+		closeButton.hoverStyle = .init(shape: .circle)
 		
 #if !os(xrOS)
 		
